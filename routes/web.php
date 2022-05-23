@@ -20,7 +20,11 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', function () {
-    return 'Ini halaman awal';
+    return view('welcome');
+});
+
+Route::get('/version', function () {
+    return ["version" => "1.0"];
 });
 
 Route::get('/lang', function () {
