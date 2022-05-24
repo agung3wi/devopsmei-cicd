@@ -11,8 +11,8 @@ node {
 
     // Testing
     stage("Test"){
-        docker.image('ubuntu').inside('-u root') {
-            sh 'echo "Ini adalah test"'
+        docker.image('php:7.4-cli').inside('-u root') {
+            sh 'php artisan test --testsuite=Unit'
         }
     }
 
@@ -29,8 +29,10 @@ node {
 
     // Testing
     stage("Test"){
-        docker.image('ubuntu').inside('-u root') {
-            sh 'echo "Ini adalah test"'
+        docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+            sshagent (credentials: ['ssh-dev']) {
+                sh "ssh ubuntu@13.213.45.183 'cd /home/ubuntu/dev.kelasdevops.xyz/ && php artisan migrate'"
+            }
         }
     }
 
