@@ -31,7 +31,9 @@ node {
     stage("Test"){
         docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
             sshagent (credentials: ['ssh-dev']) {
-                sh "ssh ubuntu@13.213.45.183 'cd /home/ubuntu/dev.kelasdevops.xyz/ && php artisan migrate'"
+                sh 'mkdir -p ~/.ssh'
+                sh 'ssh-keyscan -H "13.213.45.183" > ~/.ssh/known_hosts'
+                sh "ssh ubuntu@13.213.45.183 'cd /home/ubuntu/dev.kelasdevops.xyz && php artisan test --testsuite=Feature'"
             }
         }
     }
